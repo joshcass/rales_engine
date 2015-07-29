@@ -8,4 +8,5 @@ class Invoice < ActiveRecord::Base
   has_many :transactions
 
   scope :successful, -> { joins(:transactions).where(transactions: {result: 'success'}) }
+  scope :failed, -> { joins(:transactions).where(transactions: {result: 'failed'})}
 end

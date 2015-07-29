@@ -6,7 +6,13 @@ Rails.application.routes.draw do
       get '/merchants/find_all', to: 'merchants#find_all'
       get '/merchants/:id/items', to: 'merchants#items'
       get '/merchants/:id/invoices', to: 'merchants#invoices'
-      resources :merchants, only: [:show]
+      get '/merchants/most_revenue', to: 'merchants#most_revenue'
+      get '/merchants/most_items', to: 'merchants#most_items'
+      get '/merchants/revenue', to: 'merchants#revenue'
+      get '/merchants/:id/revenue', to: 'merchants#revenue'
+      get '/merchants/:id/favorite_customer', to: 'merchants#favorite_customer'
+      get '/merchants/:id/customers_with_pending_invoices', to: 'merchants#customers_with_pending_invoices'
+      resources :merchants, only: [:show, :index]
 
       get '/customers/random', to: 'customers#random'
       get '/customers/find', to: 'customers#find'
@@ -14,14 +20,14 @@ Rails.application.routes.draw do
       get '/customers/:id/invoices', to: 'customers#invoices'
       get '/customers/:id/transactions', to: 'customers#transactions'
       get 'customers/:id/favorite_merchant', to: 'customers#favorite_merchant'
-      resources :customers, only: [:show]
+      resources :customers, only: [:show, :index]
 
       get '/invoice_items/random', to: 'invoice_items#random'
       get '/invoice_items/find', to: 'invoice_items#find'
       get '/invoice_items/find_all', to: 'invoice_items#find_all'
       get 'invoice_items/:id/invoice', to: 'invoice_items#invoice'
       get 'invoice_items/:id/item', to: 'invoice_items#item'
-      resources :invoice_items, only: [:show]
+      resources :invoice_items, only: [:show, :index]
 
       get '/invoices/random', to: 'invoices#random'
       get '/invoices/find', to: 'invoices#find'
@@ -31,7 +37,7 @@ Rails.application.routes.draw do
       get '/invoices/:id/items', to: 'invoices#items'
       get '/invoices/:id/customer', to: 'invoices#customer'
       get '/invoices/:id/merchant', to: 'invoices#merchant'
-      resources :invoices, only: [:show]
+      resources :invoices, only: [:show, :index]
 
       get '/items/random', to: 'items#random'
       get '/items/find', to: 'items#find'
@@ -41,13 +47,13 @@ Rails.application.routes.draw do
       get '/items/most_revenue/', to: 'items#most_revenue'
       get '/items/most_items/', to: 'items#most_items'
       get '/items/:id/best_day', to: 'items#best_day'
-      resources :items, only: [:show]
+      resources :items, only: [:show, :index]
 
       get '/transactions/random', to: 'transactions#random'
       get '/transactions/find', to: 'transactions#find'
       get '/transactions/find_all', to: 'transactions#find_all'
       get '/transactions/:id/invoice', to: 'transactions#invoice'
-      resources :transactions, only: [:show]
+      resources :transactions, only: [:show, :index]
    end
   end
 end

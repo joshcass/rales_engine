@@ -1,22 +1,41 @@
 require 'csv'
-desc "Import CSV into Active Record Table"
-task :csv_model_import, [:filename, :model] => :environment do |task,args|
-  firstline=0
-  keys = {}
 
-  CSV.foreach(File.expand_path('lib/assets/' "#{args[:filename]}")) do |row|
-    if (firstline==0)
-      keys = row
-      firstline=1
-      next
-    end
+task csv: :environment do
+  desc "parse csv file to get AR data"
 
-    params = {}
+  csv_text = File.read('./lib/assets/customers.csv')
+  csv = CSV.parse(csv_text, :headers => true)
+  csv.each do |row|
+    Customer.create(row.to_h)
+  end
 
-    keys.each_with_index do |key,i|
-      params[key] = row[i]
-    end
+  csv_text = File.read('./lib/assets/merchants.csv')
+  csv = CSV.parse(csv_text, :headers => true)
+  csv.each do |row|
+    Merchant.create(row.to_h)
+  end
 
-    Module.const_get(args[:model]).create(params)
+  csv_text = File.read('./lib/assets/items.csv')
+  csv = CSV.parse(csv_text, :headers => true)
+  csv.each do |row|
+    Item.create(row.to_h)
+  end
+
+  csv_text = File.read('./lib/assets/invoices.csv')
+  csv = CSV.parse(csv_text, :headers => true)
+  csv.each do |row|
+    Invoice.create(row.to_h)
+  end
+
+  csv_text = File.read('./lib/assets/invoice_items.csv')
+  csv = CSV.parse(csv_text, :headers => true)
+  csv.each do |row|
+    InvoiceItem.create(row.to_h)
+  end
+
+  csv_text = File.read('./lib/assets/transactions.csv')
+  csv = CSV.parse(csv_text, :headers => true)
+  csv.each do |row|
+    Transaction.create(row.to_h.except("credit_card_expiration_date"))
   end
 end
