@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
+  def show_all
+    klass = get_class
+    klass.all
+  end
+
   def find_random
     klass = get_class
     klass.all.sample

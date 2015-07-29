@@ -1,0 +1,11 @@
+one:
+  first_name: Jorge
+  last_name: Tellez
+  created_at: "2012-03-23 02:58:15"
+  updated_at: "2012-03-23 02:58:15"
+
+two:
+  first_name: Lev
+  last_name: Kravinsky
+  created_at: "2012-03-23 02:58:15"
+  updated_at: "2012-03-23 02:58:15"

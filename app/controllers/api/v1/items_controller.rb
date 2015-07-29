@@ -1,6 +1,10 @@
 class Api::V1::ItemsController < ApplicationController
   respond_to :json, :xml
 
+  def index
+    respond_with show_all
+  end
+
   def random
     respond_with find_random
   end
