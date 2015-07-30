@@ -5,10 +5,10 @@ class Customer < ActiveRecord::Base
   has_many :transactions, through: :invoices
   has_many :merchants, through: :invoices
 
+  scope :all_transactions, -> { joins(:transactions) }
+
   def favorite_merchant
-    name_pair = invoices.successful.joins(:merchant).group(:name).count.max_by{ |_, v| v }
-    if name_pair
-      merchants.find_by(name: name_pair.first)
-    end
+    fav_merch = invoices.successful.joins(:merchant).group(:name).count.max_by{ |_, v| v }
+    merchants.find_by(name: fav_merch.first) if fav_merch
   end
 end
