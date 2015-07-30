@@ -41,6 +41,6 @@ class Api::V1::ItemsController < ApplicationController
 
   def best_day
     item = find_resource
-    respond_with item.best_day
+    respond_with item.best_day.to_json
   end
 end

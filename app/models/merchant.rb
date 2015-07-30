@@ -24,14 +24,16 @@ class Merchant < ActiveRecord::Base
   end
 
   def self.revenue_for_date(date)
-    joins(:invoices).where(invoices: {created_at: date}).merge(Invoice.successful).includes(:invoice_items).sum("quantity * unit_price")
+    day = date.to_date
+    joins(:invoices).merge(Invoice.successful).where(invoices: {created_at: day.beginning_of_day..day.end_of_day}).includes(:invoice_items).sum("quantity * unit_price") / 100
   end
 
   def revenue(date = nil)
     if date
-      invoices.successful.where(created_at: date).joins(:invoice_items).sum("quantity * unit_price").to_f
+      day = date.to_date
+      invoices.successful.where(created_at: day.beginning_of_day..day.end_of_day).joins(:invoice_items).sum("quantity * unit_price") /100
     else
-      invoices.successful.joins(:invoice_items).sum("quantity * unit_price")
+      invoices.successful.joins(:invoice_items).sum("quantity * unit_price") / 100
     end
   end
 
@@ -43,6 +45,6 @@ class Merchant < ActiveRecord::Base
   end
 
   def customers_with_pending_invoices
-
+    (invoices - invoices.successful).map(&:customer).uniq
   end
 end
